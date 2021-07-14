@@ -1371,6 +1371,20 @@
                 }
                 var requiredProperties = nodeObjectDict.GetArrayFromMetaData<string>("required");
 
+                if (requiredFields != null)
+                {
+                    if (requiredProperties == null)
+                    {
+                        requiredProperties = requiredFields;
+                    }
+                    else
+                    {
+                        var requiredPropertiesList = requiredProperties.ToList();
+                        requiredPropertiesList.AddRange(requiredFields.ToList());
+                        requiredProperties = requiredPropertiesList.ToArray();
+                    }
+                }
+
                 definitionObject.DiscriminatorKey = nodeObjectDict.GetValueFromMetaData<string>("discriminator");
                 definitionObject.DiscriminatorValue = nodeObjectDict.GetValueFromMetaData<string>("x-ms-discriminator-value");
                 var discriminatorPropertyKey = definitionObject.DiscriminatorKey;
